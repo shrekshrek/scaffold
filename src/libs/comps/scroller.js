@@ -1,8 +1,5 @@
 /*!
- * VERSION: 0.1.0
- * DATE: 2016-7-7
  * GIT: https://github.com/shrekshrek/components
- * @author: Shrek.wang
  **/
 
 (function (factory) {
@@ -35,22 +32,18 @@
         return dn;
     }
 
-    Scroller = function () {
-        this.initialize.apply(this, arguments);
+    Scroller = function (config) {
+        this.el = config.el;
+        this.drag = config.drag || this.el.querySelector('.contain');
+        this.bar = config.bar;
+        this.barDrag = this.bar ? this.bar.children[0] : undefined;
+        this.isX = config.isX || false;
+        this.isY = config.isY || true;
+
+        this.init();
     };
 
-    Scroller.prototype = {
-        initialize: function (config) {
-            this.el = config.el;
-            this.drag = config.drag || this.el.querySelector('.contain');
-            this.bar = config.bar;
-            this.barDrag = this.bar ? this.bar.children[0] : undefined;
-            this.isX = config.isX == undefined ? false : config.isX;
-            this.isY = config.isY == undefined ? true : config.isY;
-
-            this.init();
-        },
-
+    Object.assign(Scroller.prototype, {
         size: function (rect) {
             JT.set(this.el, {width: rect.width});
             JT.set(this.el, {height: rect.height});
@@ -186,8 +179,8 @@
             }
         },
 
-
-    };
+    });
 
     return Scroller;
+
 }));

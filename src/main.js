@@ -1,6 +1,7 @@
 import 'jstween';
-import 'expose-loader?$!./libs/jqlite.min';
-import {LayerLoader} from './core/LayerLoader';
+import 'jqlite';
+// import 'expose-loader?$!libs/jqlite.min';
+import {LayerLoader} from 'core/LayerLoader';
 import {model} from './core/model';
 
 
