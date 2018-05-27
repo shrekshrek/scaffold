@@ -1,3 +1,5 @@
+import Eventer from 'libs/eventer';
+
 var model = {
     ua: function () {
         var u = navigator.userAgent;
@@ -32,5 +34,6 @@ var model = {
 
 };
 
+Eventer.initialize(model);
 
 export {model};

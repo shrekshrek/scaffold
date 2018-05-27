@@ -42,19 +42,16 @@ VideoLayer.prototype = Object.assign(Object.create(Layer.prototype), {
         });
         this.el.appendChild(this.vplayer.el);
 
-        document.addEventListener("WeixinJSBridgeReady", () => {
-            this.vplayer.play();
-            this.vplayer.pause();
-        });
-
         this.resize();
     },
 
     resize: function () {
         Layer.prototype.resize.call(this);
 
-        this.vplayer.resize(this.originRect.width * this.modifyRect.scale, this.originRect.height * this.modifyRect.scale);
-        this.vplayer.el.style.top = (window.innerHeight - this.originRect.height * this.modifyRect.scale) / 2 + 'px';
+        if (this.vplayer) {
+            this.vplayer.resize(this.originRect.width * this.modifyRect.scale, this.originRect.height * this.modifyRect.scale);
+            this.vplayer.el.style.top = (window.innerHeight - this.originRect.height * this.modifyRect.scale) / 2 + 'px';
+        }
     }
 
 });

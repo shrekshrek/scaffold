@@ -83,3 +83,15 @@ function init() {
 
 }
 
+
+//---------------------------------------------------------------------------------audio
+var aplayer = new Aplayer({type: 'dom'});
+
+if (model.ua.ios && model.ua.wechat) {
+    document.addEventListener("WeixinJSBridgeReady", function () {
+        // aplayer.ready([{id: 'bgm', url: './media/bgm.mp3', loop: true, autoPlay: true, volume: 0.1}]);
+    });
+} else {
+    // aplayer.ready([{id: 'bgm', url: './media/bgm.mp3', loop: true, autoPlay: true, volume: 0.1}]);
+}
+

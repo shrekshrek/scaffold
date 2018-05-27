@@ -20,6 +20,7 @@ var FlashLayer = function () {
     this.originRect.height = lib.properties.height;
 
     var loader = new createjs.LoadQueue(false, null, true);
+    loader.setMaxConnections(100);
 
     createjs.MotionGuidePlugin.install();
 

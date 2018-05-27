@@ -5,15 +5,13 @@ import {model} from 'core/model';
 var Vplayer = function (url, options) {
     options = options || {};
 
-    var empty = function () {
-    };
-
-    this.onStart = options.onStart || empty;
-    this.onEnd = options.onEnd || empty;
-    this.onPlaying = options.onPlaying || empty;
+    this.onStart = options.onStart || null;
+    this.onEnd = options.onEnd || null;
+    this.onPlaying = options.onPlaying || null;
     this.lastTime = 0;
+    this.type = options.type || 'mp4';
 
-    if (model.ua.ios || model.ua.wechat) {
+    if (model.ua.ios || model.ua.wechat && this.type === 'mp4') {
         this.type = 'video';
         this.el = document.createElement('video');
         this.el.preload = 'auto';
@@ -43,12 +41,12 @@ var Vplayer = function (url, options) {
         }
 
         driver.addEventListener('timeupdate', () => {
-            if (this.lastTime === 0 && driver.currentTime > 0) this.onStart();
-            else if (this.lastTime !== driver.currentTime) this.onPlaying();
+            if (this.onStart && this.lastTime === 0 && driver.currentTime > 0) this.onStart();
+            else if (this.onPlaying && this.lastTime !== driver.currentTime) this.onPlaying();
             this.lastTime = driver.currentTime;
         });
         driver.addEventListener('ended', () => {
-            this.onEnd();
+            if (this.onEnd) this.onEnd();
         });
     } else {
         this.type = 'canvas';
@@ -57,12 +55,12 @@ var Vplayer = function (url, options) {
             canvas: this.el,
             loop: (options.loop || false),
             onPlaying: () => {
-                if (this.lastTime === 0 && this.player.currentTime > 0) this.onStart();
-                else if (this.lastTime !== this.player.currentTime) this.onPlaying();
+                if (this.onStart && this.lastTime === 0 && this.player.currentTime > 0) this.onStart();
+                else if (this.onPlaying && this.lastTime !== this.player.currentTime) this.onPlaying();
                 this.lastTime = this.player.currentTime;
             },
             onEnd: () => {
-                this.onEnd();
+                if (this.onEnd) this.onEnd();
             }
         });
     }
