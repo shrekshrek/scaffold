@@ -75,11 +75,7 @@ resize();
 
 //---------------------------------------------------------------------------------init
 function init() {
-    JT.to('#loading', 0.4, {
-        opacity: 0, onEnd: function () {
-            this.el.style.display = 'none';
-        }
-    });
+    JT.to('#loading', 0.4, {autoAlpha: 0});
 
 }
 
