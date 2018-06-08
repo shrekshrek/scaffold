@@ -1,9 +1,8 @@
-// import 'jstween';
-import JT from 'jstween';
 import $ from 'jquery';
 import {LayerLoader} from 'core/LayerLoader';
 import {model} from './core/model';
 import {Aplayer} from 'core/Aplayer';
+import JT from 'jstween';
 
 
 var $body = $('body'), $window = $(window);

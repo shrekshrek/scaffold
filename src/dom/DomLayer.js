@@ -2,8 +2,8 @@ import {Layer} from 'core/Layer';
 import './dom.less';
 import html from './dom.html';
 
-import JT from 'libs/jstween/jstween';
-import JTL from 'libs/jstween/jstimeline';
+import JT from 'jstween';
+import JTL from 'jstimeline';
 import {model} from 'core/model';
 
 
@@ -34,7 +34,7 @@ DomLayer.prototype = Object.assign(Object.create(Layer.prototype), {
         this.modifyRect.width = this.originRect.width;
         this.modifyRect.height = _h;
         this.modifyRect.scale = _s;
-
+        
         JT.set(this.el, {
             width: this.modifyRect.width,
             height: this.modifyRect.height,
