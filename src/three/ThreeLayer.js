@@ -2,6 +2,7 @@ import 'expose-loader?THREE!libs/three/three.r90.min';
 import {Layer} from 'core/Layer';
 import {model} from 'core/model';
 
+
 var ThreeLayer = function () {
     Layer.call(this);
 

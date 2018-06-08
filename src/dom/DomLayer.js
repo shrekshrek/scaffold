@@ -2,7 +2,10 @@ import {Layer} from 'core/Layer';
 import './dom.less';
 import html from './dom.html';
 
+import JT from 'libs/jstween/jstween';
+import JTL from 'libs/jstween/jstimeline';
 import {model} from 'core/model';
+
 
 var DomLayer = function () {
     Layer.call(this);
@@ -40,7 +43,9 @@ DomLayer.prototype = Object.assign(Object.create(Layer.prototype), {
     },
 
     init: function () {
-
+        var tl = JTL.create();
+        tl.to('#test', 1, {x: 100}, 1);
+        tl.play();
     },
 
     resize: function () {

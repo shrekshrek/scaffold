@@ -65,7 +65,7 @@ module.exports = {
             video: path.resolve(__dirname, 'src/video'),
             libs: path.resolve(__dirname, 'src/libs'),
 
-            jqlite: 'libs/jqlite.min',
+            jquery: 'libs/jquery/jqlite.min',
             jstween: 'libs/jstween/jstween.min',
             jstimeline: 'libs/jstween/jstimeline.min',
             jsparallax: 'libs/jstween/jsparallax.min',

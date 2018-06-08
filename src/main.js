@@ -1,18 +1,19 @@
-import 'jstween';
-import 'jqlite';
-// import 'expose-loader?$!libs/jqlite.min';
+// import 'jstween';
+import JT from 'jstween';
+import $ from 'jquery';
 import {LayerLoader} from 'core/LayerLoader';
 import {model} from './core/model';
+import {Aplayer} from 'core/Aplayer';
 
 
 var $body = $('body'), $window = $(window);
 var domLayer, flashLayer, threeLayer, videoLayer;
 
 var layerData = [
-    // {id: 'dom', per: 20},
+    {id: 'dom', per: 20},
     // {id: 'flash', per: 40, sub: true},
-    // {id: 'three', per: 20},
-    {id: 'video', per: 20},
+    {id: 'three', per: 20},
+    // {id: 'video', per: 20},
 ];
 
 var layerLoader = new LayerLoader({
@@ -76,6 +77,7 @@ resize();
 //---------------------------------------------------------------------------------init
 function init() {
     JT.to('#loading', 0.4, {autoAlpha: 0});
+
 
 }
 
