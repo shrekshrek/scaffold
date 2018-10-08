@@ -10,7 +10,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
         publicPath: './dist/',
-        chunkFilename: "[name].chunk.js"
+        chunkFilename: "[name].chunk.js?v=[hash:8]"
     },
     optimization: {
         // runtimeChunk: true,
@@ -74,7 +74,7 @@ module.exports = {
         }
     },
     externals: {
-        // jquery: '$',
+        jquery: '$',
     },
     plugins: [
         // new CleanWebpackPlugin(['dist']),
