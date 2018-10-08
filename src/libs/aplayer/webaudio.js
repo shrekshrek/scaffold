@@ -5,10 +5,13 @@ var WebAudio = function () {
     window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.msAudioContext;
     this.audioContext = new AudioContext();
     this.audios = {};
+    this.onComplete = null;
+    this.totalLoad = 0;
+    this.currentLoad = 0;
 };
 
 WebAudio.prototype = {
-    load: function (items) {
+    load: function (items, complete) {
         for (var i = 0, l = items.length; i < l; i++) {
             var item = items[i];
             this.audios[item.id] = {};
@@ -18,6 +21,9 @@ WebAudio.prototype = {
             this.audios[item.id].volume = item.volume || 1;
             this._load(item.url, item.id);
         }
+        this.currentLoad = 0;
+        this.totalLoad = items.length;
+        this.onComplete = complete;
     },
 
     _load: function (url, id) {
@@ -33,6 +39,10 @@ WebAudio.prototype = {
                 _self.audios[id].gain.connect(_self.audioContext.destination);
                 if (_self.audios[id].autoPlay) _self.play(id);
                 if (_self.audios[id].volume) _self.volume(id, _self.audios[id].volume);
+                _self.currentLoad++;
+                if (_self.currentLoad == _self.totalLoad && _self.onComplete) {
+                    _self.onComplete();
+                }
             }, function (e) {
                 console.log("!Decode Error:(");
             });
@@ -71,7 +81,17 @@ WebAudio.prototype = {
         if (!this.audios[id]) return;
 
         if (this.audios[id].gain) {
-            this.audios[id].gain.gain.setValueAtTime(n, this.audioContext.currentTime)
+            this.audios[id].gain.gain.setValueAtTime(n, this.audioContext.currentTime);
+            this.audios[id].volume = n;
+        }
+    },
+
+    muted: function (bool) {
+        for (var i in this.audios) {
+            if (this.audios[i]) {
+                if (bool) this.audios[i].gain.gain.setValueAtTime(0, this.audioContext.currentTime);
+                else this.audios[i].gain.gain.setValueAtTime(this.audios[i].volume, this.audioContext.currentTime);
+            }
         }
     },
 
