@@ -1,6 +1,7 @@
 import {Layer} from 'core/Layer';
 import {Vplayer} from 'core/Vplayer';
 import {model} from 'core/model';
+import JT from 'jstween';
 
 var VideoLayer = function () {
     Layer.call(this);
