@@ -88,6 +88,7 @@ Object.assign(Vplayer.prototype, {
 
     seek: function (time) {
         this.player.currentTime = time;
+        this.lastTime = time;
     },
 
     pause: function () {
@@ -100,8 +101,13 @@ Object.assign(Vplayer.prototype, {
     },
 
     resize: function (width, height) {
-        this.el.style.width = width + 'px';
-        this.el.style.height = height + 'px';
+        if (this.type == 'video') {
+            this.el.style.width = width + 'px';
+            this.el.style.height = height + 'px';
+        } else {
+            this.el.style.width = width * 1.025 + 'px';
+            this.el.style.height = height + 'px';
+        }
     },
 
     muted: function (bool) {

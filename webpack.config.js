@@ -19,6 +19,11 @@ module.exports = {
                 vendor: {
                     test: /[\\/]node_modules[\\/]/,
                     priority: -20
+                },
+                commons: {
+                    name: "common",
+                    chunks: "initial",
+                    minChunks: 2
                 }
             }
         }
@@ -36,7 +41,7 @@ module.exports = {
             },
             {
                 test: /\.(png|jpg|gif|svg)$/,
-                use: ['url-loader?limit=20480']
+                use: ['url-loader?limit=50000&name=assets/[name]_[hash:5].[ext]']
             },
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/,
