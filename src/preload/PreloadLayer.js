@@ -13,6 +13,7 @@ var PreloadLayer = function () {
     this.el.style.position = 'absolute';
     this.el.style.transformOrigin = '0% 0%';
     this.el.style.overflow = 'hidden';
+    this.$el = $(this.el);
 
     this.originRect.width = 750;
     this.originRect.height = 1448;
