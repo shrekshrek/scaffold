@@ -1,21 +1,18 @@
 import {Layer} from 'core/Layer';
-import './dom.less';
-import html from './dom.html';
+import './preload.less';
+import html from './preload.html';
 
 import JT from 'jstween';
-import JTL from 'jstimeline';
-import {model} from 'core/model';
+import {model} from "core/model";
 
-
-var DomLayer = function () {
+var PreloadLayer = function () {
     Layer.call(this);
 
     this.el = document.createElement('div');
-    this.el.id = 'dom';
+    this.el.id = 'preload';
     this.el.style.position = 'absolute';
     this.el.style.transformOrigin = '0% 0%';
     this.el.style.overflow = 'hidden';
-    this.$el = $(this.el);
 
     this.originRect.width = 750;
     this.originRect.height = 1448;
@@ -25,8 +22,8 @@ var DomLayer = function () {
     this.resizeEl();
 };
 
-DomLayer.prototype = Object.assign(Object.create(Layer.prototype), {
-    constructor: DomLayer,
+PreloadLayer.prototype = Object.assign(Object.create(Layer.prototype), {
+    constructor: PreloadLayer,
 
     resizeEl: function () {
         var _iw = window.innerWidth, _ih = window.innerHeight;
@@ -44,17 +41,19 @@ DomLayer.prototype = Object.assign(Object.create(Layer.prototype), {
     },
 
     init: function () {
-        var tl = JTL.create();
-        tl.to('#test', 1, {x: 100}, 1);
-        tl.play();
+        this.$txt = $(this.el).find('.txt');
+        this.$txt.text('0%');
     },
 
     resize: function () {
         Layer.prototype.resize.call(this);
+    },
 
-    }
+    progress: function (n) {
+        this.$txt.text(Math.floor(n * 100) + '%');
+    },
 
 });
 
 
-export {DomLayer};
+export {PreloadLayer};

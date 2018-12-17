@@ -8,6 +8,15 @@ import JT from 'jstween';
 var $body = $('body'), $window = $(window);
 var domLayer, flashLayer, threeLayer, videoLayer;
 
+//-------------------------------------------------------------------preload
+import {PreloadLayer} from "./preload/PreloadLayer";
+
+preloadLayer = new PreloadLayer();
+$body.prepend(preloadLayer.el);
+preloadLayer.init();
+
+
+//-------------------------------------------------------------------layers
 var layerData = [
     {id: 'dom', per: 20},
     // {id: 'flash', per: 40, sub: true},
@@ -17,8 +26,7 @@ var layerData = [
 
 var layerLoader = new LayerLoader({
     progress: function (per) {
-        $('#loading .txt').text(Math.floor(per * 100) + '%');
-        // console.log(Math.floor(per * 100));
+        preloadLayer.progress(per);
     },
     complete: function () {
         domLayer = this.domLayer;
@@ -30,7 +38,7 @@ var layerLoader = new LayerLoader({
             $body.prepend(domLayer.el);
             domLayer.init();
 
-            $(domLayer.el).on('touchmove', function (evt) {
+            domLayer.$el.on('touchmove', function (evt) {
                 evt.preventDefault();
                 evt.stopPropagation();
             });
@@ -63,32 +71,40 @@ function resize() {
     if (videoLayer) videoLayer.resize();
 }
 
-var timeId;
+var resizeId;
 $window.on('resize', function () {
-    if (timeId) clearTimeout(timeId);
-    timeId = setTimeout(function () {
+    if (resizeId) clearTimeout(resizeId);
+    resizeId = setTimeout(function () {
         resize();
     }, 100);
 });
-resize();
 
 
 //---------------------------------------------------------------------------------init
 function init() {
-    JT.to('#loading', 0.4, {autoAlpha: 0});
-
+    resize();
+    JT.to(preloadLayer.el, 0.3, {autoAlpha: 0});
 
 }
 
 
 //---------------------------------------------------------------------------------audio
 var aplayer = new Aplayer({type: 'dom'});
+var audioList = [
+    {id: 'bgm', url: './media/bgm.mp3', loop: true, autoplay: true, volume: 0.5},
+];
 
 if (model.ua.ios && model.ua.wechat) {
     document.addEventListener("WeixinJSBridgeReady", function () {
-        // aplayer.ready([{id: 'bgm', url: './media/bgm.mp3', loop: true, autoPlay: true, volume: 0.1}]);
+        aplayer.ready(audioList);
     });
 } else {
-    // aplayer.ready([{id: 'bgm', url: './media/bgm.mp3', loop: true, autoPlay: true, volume: 0.1}]);
+    aplayer.ready(audioList);
 }
+
+
+//---------------------------------------------------------------------------------start
+JT.set(preloadLayer.el, {autoAlpha: 1});
+layerLoader.load(layerData);
+
 
