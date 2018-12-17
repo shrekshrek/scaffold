@@ -1,5 +1,6 @@
 import {Layer} from 'core/Layer';
 import {Vplayer} from 'core/Vplayer';
+import {model} from 'core/model';
 
 var VideoLayer = function () {
     Layer.call(this);
