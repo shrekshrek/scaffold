@@ -14,7 +14,7 @@ var VideoLayer = function () {
     this.$el = $(this.el);
 
     this.originRect.width = 750;
-    this.originRect.height = 1334;
+    this.originRect.height = 1448;
 
     this.resizeEl();
 };

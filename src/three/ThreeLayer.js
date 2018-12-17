@@ -12,7 +12,7 @@ var ThreeLayer = function () {
     this.$el = $(this.el);
 
     this.originRect.width = 750;
-    this.originRect.height = 1334;
+    this.originRect.height = 1448;
 
     this.cameraOriginZ = 2666;
     this.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 10000);
