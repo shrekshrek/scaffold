@@ -7,6 +7,7 @@ var VideoLayer = function () {
     this.el = document.createElement('div');
     this.el.id = 'video-layer';
     this.el.style.position = 'absolute';
+    this.el.style.transformOrigin = '0% 0%';
     this.el.style.overflow = 'hidden';
     this.$el = $(this.el);
 
@@ -26,8 +27,11 @@ VideoLayer.prototype = Object.assign(Object.create(Layer.prototype), {
         this.modifyRect.width = this.originRect.width;
         this.modifyRect.height = _h;
         this.modifyRect.scale = _s;
-        this.el.style.width = _iw + 'px';
-        this.el.style.height = _ih + 'px';
+
+        JT.set(this.el, {
+            width: _iw,
+            height: _ih
+        });
     },
 
     init: function () {
