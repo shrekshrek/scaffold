@@ -44,14 +44,33 @@ DomLayer.prototype = Object.assign(Object.create(Layer.prototype), {
     },
 
     init: function () {
-        var tl = JTL.create();
-        tl.to('#test', 1, {x: 100}, 1);
-        tl.play();
+        this.curPageId = null;
+        this.pages = {};
     },
 
     resize: function () {
         Layer.prototype.resize.call(this);
 
+    },
+
+    createPage: function (id) {
+        var _page = this.$el.find(id);
+        this.pages[id] = _page;
+    },
+
+    pageOn: function (id) {
+        if (this.pages[id] == undefined) this.createPage(id);
+        if (this.curPageId != null && this.curPageId != id) this.pageOff();
+        this.curPageId = id;
+        var _page = this.pages[this.curPageId];
+        JT.to(_page, 0.2, {autoAlpha: 1});
+    },
+
+    pageOff: function () {
+        if (this.curPageId == null) return;
+        var _page = this.pages[this.curPageId];
+        JT.to(_page, 0.2, {autoAlpha: 0});
+        this.curPageId = null;
     }
 
 });

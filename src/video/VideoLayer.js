@@ -54,21 +54,21 @@ VideoLayer.prototype = Object.assign(Object.create(Layer.prototype), {
         }
     },
 
-    createPlayer: function (name) {
-        var _player = new Vplayer('./media/' + name, {
+    createPlayer: function (id) {
+        var _player = new Vplayer('./media/' + id, {
             width: this.originRect.width * this.modifyRect.scale,
             height: this.originRect.height * this.modifyRect.scale,
             canvas: model.globalCanvas,
             onStart: () => {
-                this.dispatchEvent('start', name);
+                this.dispatchEvent('start', id);
             },
             onEnd: () => {
-                this.dispatchEvent('end', name);
+                this.dispatchEvent('end', id);
             }
         });
         _player.el.style.top = (window.innerHeight - this.originRect.height * this.modifyRect.scale) / 2 + 'px';
         _player.muted(this.isMuted);
-        this.videos[name] = _player;
+        this.videos[id] = _player;
     },
 
     muted: function (bool) {
