@@ -11,7 +11,7 @@ var DomLayer = function () {
     Layer.call(this);
 
     this.el = document.createElement('div');
-    this.el.id = 'dom';
+    this.el.id = 'dom-layer';
     this.el.style.position = 'absolute';
     this.el.style.transformOrigin = '0% 0%';
     this.el.style.overflow = 'hidden';

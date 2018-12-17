@@ -5,9 +5,10 @@ var VideoLayer = function () {
     Layer.call(this);
 
     this.el = document.createElement('div');
-    this.el.id = 'video';
+    this.el.id = 'video-layer';
     this.el.style.position = 'absolute';
     this.el.style.overflow = 'hidden';
+    this.$el = $(this.el);
 
     this.originRect.width = 750;
     this.originRect.height = 1334;
@@ -30,9 +31,12 @@ VideoLayer.prototype = Object.assign(Object.create(Layer.prototype), {
     },
 
     init: function () {
+        // this.globalCanvas = document.createElement('canvas');
+
         this.vplayer = new Vplayer('./media/v1', {
             width: this.originRect.width,
             height: this.originRect.height,
+            // canvas: this.globalCanvas,
             onStart: () => {
                 this.dispatchEvent('start');
             },

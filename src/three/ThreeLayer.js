@@ -7,8 +7,9 @@ var ThreeLayer = function () {
     Layer.call(this);
 
     this.el = document.createElement('canvas');
-    this.el.id = 'three';
+    this.el.id = 'three-layer';
     this.el.style.position = 'absolute';
+    this.$el = $(this.el);
 
     this.originRect.width = 750;
     this.originRect.height = 1334;

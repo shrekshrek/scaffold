@@ -8,8 +8,9 @@ var FlashLayer = function () {
 
     //--------------------------------------------------------------------------------------导入场景数据
     this.el = document.createElement('canvas');
-    this.el.id = 'flash';
+    this.el.id = 'flash-layer';
     this.el.style.position = 'absolute';
+    this.$el = $(this.el);
 
     //--------------------------此处为flash场景id，必须设置
     this.compId = '';
