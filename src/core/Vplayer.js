@@ -10,8 +10,10 @@ var Vplayer = function (url, options) {
     this.onPlaying = options.onPlaying || null;
     this.lastTime = 0;
     this.type = options.type || 'mp4';
+    this.canvas = options.canvas || null;
 
-    if (model.ua.ios || model.ua.wechat && this.type === 'mp4') {
+    // if (model.ua.ios || model.ua.wechat && this.type === 'mp4') {
+    if (model.ua.ios && this.type === 'mp4') {
         this.type = 'video';
         this.el = document.createElement('video');
         this.el.preload = 'auto';
@@ -50,7 +52,7 @@ var Vplayer = function (url, options) {
         });
     } else {
         this.type = 'canvas';
-        this.el = document.createElement('canvas');
+        this.el = this.canvas || document.createElement('canvas');
         this.player = new JSMpeg.Player(url + '.ts', {
             canvas: this.el,
             loop: (options.loop || false),
@@ -59,7 +61,7 @@ var Vplayer = function (url, options) {
                 else if (this.onPlaying && this.lastTime !== this.player.currentTime) this.onPlaying();
                 this.lastTime = this.player.currentTime;
             },
-            onEnd: () => {
+            onEnded: () => {
                 if (this.onEnd) this.onEnd();
             }
         });
@@ -106,6 +108,7 @@ Object.assign(Vplayer.prototype, {
             this.el.style.height = height + 'px';
         } else {
             this.el.style.width = width * 1.025 + 'px';
+            // this.el.style.width = width + 'px';
             this.el.style.height = height + 'px';
         }
     },
