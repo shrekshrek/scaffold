@@ -14,11 +14,6 @@ var ThreeLayer = function () {
     this.originRect.width = 750;
     this.originRect.height = 1448;
 
-    this.cameraOriginZ = 2666;
-    this.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 10000);
-
-    this.scene = new THREE.Scene();
-
     this.renderer = new THREE.WebGLRenderer({canvas: this.el});
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -34,13 +29,6 @@ ThreeLayer.prototype = Object.assign(Object.create(Layer.prototype), {
         var _iw = window.innerWidth, _ih = window.innerHeight;
 
         this.renderer.setSize(_iw, _ih);
-
-        var _h = this.originRect.width * _ih / _iw;
-        var _fov = Math.atan(_h / 2 / this.cameraOriginZ) * 2 / Math.PI * 180;
-        this.camera.fov = _fov;
-
-        this.camera.aspect = _iw / _ih;
-        this.camera.updateProjectionMatrix();
     },
 
     init: function () {

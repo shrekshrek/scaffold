@@ -46,6 +46,10 @@ DomLayer.prototype = Object.assign(Object.create(Layer.prototype), {
     init: function () {
         this.curPageId = null;
         this.pages = {};
+
+        this.$el.on('touchend', () => {
+            this.dispatch('click');
+        });
     },
 
     resize: function () {

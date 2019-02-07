@@ -61,10 +61,16 @@ VideoLayer.prototype = Object.assign(Object.create(Layer.prototype), {
             height: this.originRect.height * this.modifyRect.scale,
             canvas: model.globalCanvas,
             onStart: () => {
-                this.dispatchEvent('start', id);
+                console.log('start', id);
+                this.dispatch('start', id);
+            },
+            onPlaying: () => {
+                console.log('playing', _player.currentTime());
+                this.dispatch('playing', id);
             },
             onEnd: () => {
-                this.dispatchEvent('end', id);
+                console.log('end', id);
+                this.dispatch('end', id);
             }
         });
         _player.el.style.top = (window.innerHeight - this.originRect.height * this.modifyRect.scale) / 2 + 'px';

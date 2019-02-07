@@ -6,7 +6,7 @@ import JT from 'jstween';
 
 
 var $body = $('body'), $window = $(window);
-var domLayer, flashLayer, threeLayer, videoLayer;
+var preloadLayer, domLayer, flashLayer, threeLayer, videoLayer;
 
 //-------------------------------------------------------------------preload
 import {PreloadLayer} from "./preload/PreloadLayer";
@@ -20,8 +20,8 @@ preloadLayer.init();
 var layerData = [
     {id: 'dom', per: 20},
     // {id: 'flash', per: 40, sub: true},
-    {id: 'three', per: 20},
-    // {id: 'video', per: 20},
+    // {id: 'three', per: 20},
+    {id: 'video', per: 20},
 ];
 
 var layerLoader = new LayerLoader({
@@ -60,8 +60,6 @@ var layerLoader = new LayerLoader({
     }
 });
 
-layerLoader.load(layerData);
-
 
 //---------------------------------------------------------------------------------全局resize
 function resize() {
@@ -85,22 +83,27 @@ function init() {
     resize();
     JT.to(preloadLayer.el, 0.3, {autoAlpha: 0});
 
+    domLayer.pageOn('.intro');
+
+    domLayer.on('click', function(){
+        videoLayer.play('v1');
+    });
 }
 
 
 //---------------------------------------------------------------------------------audio
-var aplayer = new Aplayer({type: 'dom'});
-var audioList = [
-    {id: 'bgm', url: './media/bgm.mp3', loop: true, autoplay: true, volume: 0.5},
-];
-
-if (model.ua.ios && model.ua.wechat) {
-    document.addEventListener("WeixinJSBridgeReady", function () {
-        aplayer.ready(audioList);
-    });
-} else {
-    aplayer.ready(audioList);
-}
+// var aplayer = new Aplayer({type: 'dom'});
+// var audioList = [
+//     {id: 'bgm', url: './media/bgm.mp3', loop: true, autoplay: true, volume: 0.5},
+// ];
+//
+// if (model.ua.ios && model.ua.wechat) {
+//     document.addEventListener("WeixinJSBridgeReady", function () {
+//         aplayer.ready(audioList);
+//     });
+// } else {
+//     aplayer.ready(audioList);
+// }
 
 
 //---------------------------------------------------------------------------------start
