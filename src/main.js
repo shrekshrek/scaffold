@@ -38,6 +38,12 @@ var layerLoader = new LayerLoader({
             $body.prepend(domLayer.el);
             domLayer.init();
 
+            domLayer.$el.on('focusin', function () {
+                window.scrollTo(0, 250);
+            });
+            domLayer.$el.on('focusout', function () {
+                window.scrollTo(0, 0);
+            });
             domLayer.$el.on('touchmove', function (evt) {
                 evt.preventDefault();
                 evt.stopPropagation();
@@ -85,7 +91,7 @@ function init() {
 
     domLayer.pageOn('.intro');
 
-    domLayer.on('click', function(){
+    domLayer.on('click', function () {
         videoLayer.play('v1');
     });
 }
