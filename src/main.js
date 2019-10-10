@@ -87,7 +87,11 @@ $window.on('resize', function () {
 //---------------------------------------------------------------------------------init
 function init() {
     resize();
-    JT.to(preloadLayer.el, 0.3, {autoAlpha: 0});
+    JT.to(preloadLayer.el, 0.3, {
+        autoAlpha: 0, onEnd: function () {
+            preloadLayer.$el.remove();
+        }
+    });
 
     domLayer.pageOn('.intro');
 
