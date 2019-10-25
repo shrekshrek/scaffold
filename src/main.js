@@ -95,9 +95,10 @@ function init() {
 
     domLayer.pageOn('.intro');
 
-    domLayer.on('click', function () {
+    domLayer.once('click', function () {
         videoLayer.play('v1');
     });
+
 }
 
 
@@ -117,7 +118,6 @@ function init() {
 
 
 //---------------------------------------------------------------------------------start
-JT.set(preloadLayer.el, {autoAlpha: 1});
 layerLoader.load(layerData);
 
 

@@ -13,42 +13,48 @@
 
 // static public methods:
     Eventer.initialize = function (target) {
-        target.on = target.addEventListener = p.addEventListener;
-        target.off = target.removeEventListener = p.removeEventListener;
-        target.offAll = target.removeAllEventListeners = p.removeAllEventListeners;
-        target.hasListener = target.hasEventListener = p.hasEventListener;
-        target.dispatch = target.dispatchEvent = p.dispatchEvent;
+        target.on = target.addEventListener = p.on;
+        target.off = target.removeEventListener = p.off;
+        target.offAll = target.removeAllEventListeners = p.offAll;
+        target.hasListener = target.hasEventListener = p.hasListener;
+        target.dispatch = target.dispatchEvent = p.dispatch;
+        target.once = p.once;
     };
 
 // public methods:
     p.on = function (type, listener, originListener) {
-        var listeners = this._listeners = this._listeners || {};
-        var arr = listeners[type];
-        if (arr) this.off(type, listener);
-        arr = listeners[type];
-        if (originListener) listener.origin = listener;
-        if (!arr) listeners[type] = [listener];
-        else arr.push(listener);
+        var _listeners = this._listeners = this._listeners || {};
+        var _arr = _listeners[type];
+        if (_arr) this.off(type, listener);
+        _arr = _listeners[type];
+        if (originListener) listener.origin = originListener;
+        if (!_arr) _listeners[type] = [listener];
+        else _arr.push(listener);
         return this;
     };
 
     p.once = function (type, listener) {
+        var _self = this;
         var onceListener = function (params) {
-            p.off(type, onceListener);
             listener(params);
-        }
-        p.on(type, onceListener, listener);
+            _self.off(type, onceListener);
+        };
+        this.on(type, onceListener, listener);
     };
 
     p.off = function (type, listener) {
-        var listeners = this._listeners;
-        if (!listeners) return;
-        var arr = listeners[type];
-        if (!arr) return;
-        for (var i = 0, l = arr.length; i < l; i++) {
-            if (arr[i] == listener || arr[i].origin == listener) {
-                if (l == 1) delete(listeners[type]);
-                else arr.splice(i, 1);
+        var _listeners = this._listeners;
+        if (!_listeners) return;
+        var _arr = _listeners[type];
+        if (!_arr) return;
+        if (!listener) {
+            this.offAll(type);
+            return;
+        }
+        for (var i = 0, l = _arr.length; i < l; i++) {
+            if (_arr[i] == listener || _arr[i].origin == listener) {
+                if (l == 1) delete (_listeners[type]);
+                else _arr.splice(i, 1);
                 break;
             }
         }
@@ -58,28 +64,26 @@
         if (!type) {
             this._listeners = null;
         } else {
-            if (this._listeners) {
-                delete(this._listeners[type]);
-            }
+            if (this._listeners) delete (this._listeners[type]);
         }
     };
 
     p.dispatch = function (type, data) {
-        var l, listeners = this._listeners;
-        if (type && listeners) {
-            var arr = listeners[type];
-            if (!arr || !(l = arr.length)) return;
+        var _len, _listeners = this._listeners;
+        if (type && _listeners) {
+            var _arr = _listeners[type];
+            if (!_arr || !(_len = _arr.length)) return;
 
-            arr = arr.slice(0);
-            for (var i = 0; i < l; i++) {
-                arr[i]({type: type, data: data});
+            var _temp = _arr.slice(0);
+            for (var i = 0; i < _len; i++) {
+                _temp[i]({type: type, data: data});
             }
         }
     };
 
     p.hasListener = function (type) {
-        var listeners = this._listeners;
-        return !!(listeners && listeners[type]);
+        var _listeners = this._listeners;
+        return !!(_listeners && _listeners[type]);
     };
 
     p.addEventListener = p.on;
