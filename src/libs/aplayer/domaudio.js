@@ -3,7 +3,7 @@ var DomAudio = function () {
 };
 
 DomAudio.prototype = {
-    load: function (items, complete) {
+    load(items, complete) {
         for (var i = 0, l = items.length; i < l; i++) {
             var item = items[i];
             this.audios[item.id] = document.createElement('audio');
@@ -22,22 +22,22 @@ DomAudio.prototype = {
         if (this.onComplete) this.onComplete();
     },
 
-    play: function (id) {
+    play(id) {
         if (!this.audios[id]) return;
         this.audios[id].play();
     },
 
-    stop: function (id) {
+    stop(id) {
         if (!this.audios[id]) return;
         this.audios[id].pause();
     },
 
-    volume: function (id, n) {
+    volume(id, n) {
         if (!this.audios[id]) return;
         this.audios[id].volume = n;
     },
 
-    muted: function (bool) {
+    muted(bool) {
         for (var i in this.audios) {
             if (this.audios[i]) {
                 this.audios[i].muted = bool;

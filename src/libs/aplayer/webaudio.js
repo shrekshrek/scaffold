@@ -11,7 +11,7 @@ var WebAudio = function () {
 };
 
 WebAudio.prototype = {
-    load: function (items, complete) {
+    load(items, complete) {
         for (var i = 0, l = items.length; i < l; i++) {
             var item = items[i];
             this.audios[item.id] = {};
@@ -26,7 +26,7 @@ WebAudio.prototype = {
         this.onComplete = complete;
     },
 
-    _load: function (url, id) {
+    _load(url, id) {
         var _self = this;
         var _xhr = new XMLHttpRequest();
         _xhr.open('GET', url, true);
@@ -50,7 +50,7 @@ WebAudio.prototype = {
         _xhr.send();
     },
 
-    play: function (id) {
+    play(id) {
         if (!this.audios[id]) return;
 
         if (this.audios[id].source) return;
@@ -68,7 +68,7 @@ WebAudio.prototype = {
         }
     },
 
-    stop: function (id) {
+    stop(id) {
         if (!this.audios[id]) return;
 
         if (this.audios[id].source) {
@@ -77,7 +77,7 @@ WebAudio.prototype = {
         }
     },
 
-    volume: function (id, n) {
+    volume(id, n) {
         if (!this.audios[id]) return;
 
         if (this.audios[id].gain) {
@@ -86,7 +86,7 @@ WebAudio.prototype = {
         }
     },
 
-    muted: function (bool) {
+    muted(bool) {
         for (var i in this.audios) {
             if (this.audios[i]) {
                 if (bool) this.audios[i].gain.gain.setValueAtTime(0, this.audioContext.currentTime);
@@ -95,7 +95,7 @@ WebAudio.prototype = {
         }
     },
 
-    ready: function () {
+    ready() {
         this.audioContext.createBufferSource();
     }
 };

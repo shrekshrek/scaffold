@@ -22,7 +22,7 @@ var VideoLayer = function () {
 VideoLayer.prototype = Object.assign(Object.create(Layer.prototype), {
     constructor: VideoLayer,
 
-    resizeEl: function () {
+    resizeEl() {
         var _iw = window.innerWidth, _ih = window.innerHeight;
         var _s = _iw / this.originRect.width;
         var _h = _ih / _s;
@@ -36,14 +36,14 @@ VideoLayer.prototype = Object.assign(Object.create(Layer.prototype), {
         });
     },
 
-    init: function () {
+    init() {
         model.globalCanvas = document.createElement('canvas');
         this.curVideoId = null;
         this.isMuted = false;
         this.videos = {};
     },
 
-    resize: function () {
+    resize() {
         Layer.prototype.resize.call(this);
 
         for (var i in this.videos) {
@@ -55,7 +55,7 @@ VideoLayer.prototype = Object.assign(Object.create(Layer.prototype), {
         }
     },
 
-    createPlayer: function (id) {
+    createPlayer(id) {
         var _player = new Vplayer('./media/' + id, {
             width: this.originRect.width * this.modifyRect.scale,
             height: this.originRect.height * this.modifyRect.scale,
@@ -75,7 +75,7 @@ VideoLayer.prototype = Object.assign(Object.create(Layer.prototype), {
         this.videos[id] = _player;
     },
 
-    muted: function (bool) {
+    muted(bool) {
         for (var i in this.videos) {
             var _player = this.videos[i];
             _player.muted(bool);
@@ -83,7 +83,7 @@ VideoLayer.prototype = Object.assign(Object.create(Layer.prototype), {
         this.isMuted = bool;
     },
 
-    play: function (id, time) {
+    play(id, time) {
         if (this.videos[id] == undefined) this.createPlayer(id);
         if (this.curVideoId != null && this.curVideoId != id) this.pause();
         this.curVideoId = id;
@@ -92,7 +92,7 @@ VideoLayer.prototype = Object.assign(Object.create(Layer.prototype), {
         _player.play(time);
     },
 
-    pause: function () {
+    pause() {
         if (this.curVideoId == null) return;
         var _player = this.videos[this.curVideoId];
         _player.pause();
@@ -100,7 +100,7 @@ VideoLayer.prototype = Object.assign(Object.create(Layer.prototype), {
         this.curVideoId = null;
     },
 
-    ready: function (id) {
+    ready(id) {
         if (this.videos[id] == undefined) this.createPlayer(id);
         var _player = this.videos[id];
         _player.play();

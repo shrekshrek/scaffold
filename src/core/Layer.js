@@ -9,10 +9,10 @@ var Layer = function () {
 };
 
 Object.assign(Layer.prototype, {
-    resizeEl: function () {
+    resizeEl() {
     },
 
-    resize: function () {
+    resize() {
         this.resizeEl();
     }
 });

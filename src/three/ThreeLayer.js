@@ -25,17 +25,17 @@ var ThreeLayer = function () {
 ThreeLayer.prototype = Object.assign(Object.create(Layer.prototype), {
     constructor: ThreeLayer,
 
-    resizeEl: function () {
+    resizeEl() {
         var _iw = window.innerWidth, _ih = window.innerHeight;
 
         this.renderer.setSize(_iw, _ih);
     },
 
-    init: function () {
+    init() {
 
     },
 
-    resize: function () {
+    resize() {
         Layer.prototype.resize.call(this);
 
     }

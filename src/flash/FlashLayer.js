@@ -68,7 +68,7 @@ var FlashLayer = function () {
 FlashLayer.prototype = Object.assign(Object.create(Layer.prototype), {
     constructor: FlashLayer,
 
-    resizeEl: function () {
+    resizeEl() {
         var _iw = window.innerWidth, _ih = window.innerHeight;
         var _s = _iw / this.originRect.width;
         var _h = _ih / _s;
@@ -88,11 +88,11 @@ FlashLayer.prototype = Object.assign(Object.create(Layer.prototype), {
         this.stage.updateViewport(this.el.width, this.el.height);
     },
 
-    init: function () {
+    init() {
 
     },
 
-    resize: function () {
+    resize() {
         Layer.prototype.resize.call(this);
 
         if (this.stage === undefined) return;

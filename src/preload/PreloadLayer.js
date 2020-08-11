@@ -26,7 +26,7 @@ var PreloadLayer = function () {
 PreloadLayer.prototype = Object.assign(Object.create(Layer.prototype), {
     constructor: PreloadLayer,
 
-    resizeEl: function () {
+    resizeEl() {
         var _iw = window.innerWidth, _ih = window.innerHeight;
         var _s = _iw / this.originRect.width;
         var _h = _ih / _s;
@@ -41,16 +41,16 @@ PreloadLayer.prototype = Object.assign(Object.create(Layer.prototype), {
         });
     },
 
-    init: function () {
+    init() {
         this.$txt = $(this.el).find('.txt');
         this.$txt.text('0%');
     },
 
-    resize: function () {
+    resize() {
         Layer.prototype.resize.call(this);
     },
 
-    progress: function (n) {
+    progress(n) {
         this.$txt.text(Math.floor(n * 100) + '%');
     },
 

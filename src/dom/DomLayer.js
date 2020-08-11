@@ -6,7 +6,6 @@ import JT from 'jstween';
 import JTL from 'jstimeline';
 import {model} from 'core/model';
 
-
 var DomLayer = function () {
     Layer.call(this);
 
@@ -28,7 +27,7 @@ var DomLayer = function () {
 DomLayer.prototype = Object.assign(Object.create(Layer.prototype), {
     constructor: DomLayer,
 
-    resizeEl: function () {
+    resizeEl() {
         var _iw = window.innerWidth, _ih = window.innerHeight;
         var _s = _iw / this.originRect.width;
         var _h = _ih / _s;
@@ -43,7 +42,30 @@ DomLayer.prototype = Object.assign(Object.create(Layer.prototype), {
         });
     },
 
-    init: function () {
+    bindEvent(obj) {
+        for (var i in obj) {
+            var _arr = i.split(':');
+            var _str = _arr[0], _act = _arr[1] || "touchend";
+            var _dom = this.$el.find(_str);
+            _dom.on(_act, obj[i]);
+        }
+    },
+
+    unbindEvent(obj) {
+        for (var i in obj) {
+            var _arr = i.split(':');
+            var _str = _arr[0], _act = _arr[1] || "touchend";
+            var _dom = this.$el.find(_str);
+            _dom.off(_act, obj[i]);
+        }
+    },
+
+    resize() {
+        Layer.prototype.resize.call(this);
+
+    },
+
+    init() {
         this.curPageId = null;
         this.pages = {};
 
@@ -52,17 +74,12 @@ DomLayer.prototype = Object.assign(Object.create(Layer.prototype), {
         });
     },
 
-    resize: function () {
-        Layer.prototype.resize.call(this);
-
-    },
-
-    createPage: function (id) {
+    createPage(id) {
         var _page = this.$el.find(id);
         this.pages[id] = _page;
     },
 
-    pageOn: function (id) {
+    pageOn(id) {
         if (this.pages[id] == undefined) this.createPage(id);
         if (this.curPageId != null && this.curPageId != id) this.pageOff();
         this.curPageId = id;
@@ -70,7 +87,7 @@ DomLayer.prototype = Object.assign(Object.create(Layer.prototype), {
         JT.to(_page, 0.2, {autoAlpha: 1});
     },
 
-    pageOff: function () {
+    pageOff() {
         if (this.curPageId == null) return;
         var _page = this.pages[this.curPageId];
         JT.to(_page, 0.2, {autoAlpha: 0});

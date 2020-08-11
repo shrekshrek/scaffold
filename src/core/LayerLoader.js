@@ -6,13 +6,13 @@ var LayerLoader = function (options) {
 };
 
 Object.assign(LayerLoader.prototype, {
-    load: function (data) {
+    load(data) {
         this.layerData = data;
         this.percent = 0;
         this.loadLayer(0);
     },
 
-    loadLayer: function (id) {
+    loadLayer(id) {
         if (id < this.layerData.length) {
             var _curData = this.layerData[id];
             switch (_curData.id) {
@@ -46,7 +46,7 @@ Object.assign(LayerLoader.prototype, {
         }
     },
 
-    checkSubload: function (data, layer, id) {
+    checkSubload(data, layer, id) {
         if (data.sub) {
             layer.on('progress', (evt) => {
                 this.progress.call(this, this.percent + evt.data * this.layerData[id].per / 100);

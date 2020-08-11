@@ -25,10 +25,10 @@ var layerData = [
 ];
 
 var layerLoader = new LayerLoader({
-    progress: function (per) {
+    progress(per) {
         preloadLayer.progress(per);
     },
-    complete: function () {
+    complete() {
         domLayer = this.domLayer;
         flashLayer = this.flashLayer;
         threeLayer = this.threeLayer;
@@ -88,7 +88,7 @@ $window.on('resize', function () {
 function init() {
     resize();
     JT.to(preloadLayer.el, 0.3, {
-        autoAlpha: 0, onEnd: function () {
+        autoAlpha: 0, onEnd() {
             preloadLayer.$el.remove();
         }
     });

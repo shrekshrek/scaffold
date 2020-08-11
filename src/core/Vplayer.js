@@ -68,37 +68,37 @@ var Vplayer = function (url, options) {
 };
 
 Object.assign(Vplayer.prototype, {
-    currentTime: function () {
+    currentTime() {
         return this.player.currentTime;
     },
 
-    load: function () {
+    load() {
         if (this.type === 'video') this.player.load();
         else this.player.stop();
     },
 
-    play: function (time) {
+    play(time) {
         if (time !== undefined) this.seek(time);
         this.player.play();
         this.animate();
     },
 
-    seek: function (time) {
+    seek(time) {
         this.player.currentTime = time;
         this.lastTime = time;
     },
 
-    pause: function () {
+    pause() {
         this.player.pause();
         if (this.animateId) cancelAnimationFrame(this.animateId);
     },
 
-    destroy: function () {
+    destroy() {
         if (this.type === 'video') this.player.src = '';
         else this.player.destroy();
     },
 
-    resize: function (width, height) {
+    resize(width, height) {
         if (this.type == 'video') {
             this.el.style.width = width + 'px';
             this.el.style.height = height + 'px';
@@ -108,7 +108,7 @@ Object.assign(Vplayer.prototype, {
         }
     },
 
-    muted: function (bool) {
+    muted(bool) {
         if (this.type === 'video') this.player.muted = bool;
         else this.player.volume = bool ? 0 : 1;
     }
