@@ -9,6 +9,7 @@ var Vplayer = function (url, options) {
     this.onEnd = options.onEnd || null;
     this.onPlaying = options.onPlaying || null;
     this.lastTime = 0;
+    this.animateId = '';
     this.type = options.type || 'mp4';
     this.canvas = options.canvas || null;
 
@@ -43,6 +44,10 @@ var Vplayer = function (url, options) {
 
         driver.addEventListener('ended', () => {
             if (this.onEnd) this.onEnd();
+            if (this.animateId) {
+                cancelAnimationFrame(this.animateId);
+                this.animateId = '';
+            }
         });
     } else {
         this.type = 'canvas';
@@ -80,7 +85,7 @@ Object.assign(Vplayer.prototype, {
     play(time) {
         if (time !== undefined) this.seek(time);
         this.player.play();
-        this.animate();
+        if (!this.animateId) this.animate();
     },
 
     seek(time) {
@@ -90,7 +95,10 @@ Object.assign(Vplayer.prototype, {
 
     pause() {
         this.player.pause();
-        if (this.animateId) cancelAnimationFrame(this.animateId);
+        if (this.animateId) {
+            cancelAnimationFrame(this.animateId);
+            this.animateId = '';
+        }
     },
 
     destroy() {
@@ -99,7 +107,7 @@ Object.assign(Vplayer.prototype, {
     },
 
     resize(width, height) {
-        if (this.type == 'video') {
+        if (this.type === 'video') {
             this.el.style.width = width + 'px';
             this.el.style.height = height + 'px';
         } else {
