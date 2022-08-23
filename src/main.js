@@ -88,7 +88,7 @@ $window.on('resize', function () {
 function init() {
     resize();
     JT.to(preloadLayer.el, 0.3, {
-        autoAlpha: 0, onEnd() {
+        autoAlpha: 0, onEnd: () => {
             preloadLayer.$el.remove();
         }
     });
