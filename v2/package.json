@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "dev": "webpack --mode development",
+    "devw": "webpack --mode development --watch",
+    "pro": "webpack --mode production"
+  }
+}
